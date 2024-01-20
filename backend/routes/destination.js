@@ -4,7 +4,7 @@ var router_editdestination = express.Router();
 
 /*get destinations
 request: ItineraryID
-response: placename, cost, notes*/
+response: destinationId, placename, cost, notes*/
 router_getdestination.get('/api/get_destination', (req, res) => {
     const itineraryId = req.query.itineraryId; 
   
@@ -14,7 +14,7 @@ router_getdestination.get('/api/get_destination', (req, res) => {
     }
   
     pool.query(
-      'SELECT b.name, b.cost, b.notes FROM ItineraryDestination a JOIN Destination b ON a.destination_id = b.id WHERE itinerary_id = ?',
+      'SELECT b.id, b.name, b.cost, b.notes FROM itinerary_destination a JOIN destination b ON a.destination_id = b.id WHERE itinerary_id = ?',
       [itineraryId],
       (err, result) => {
         if (err) {
@@ -29,22 +29,21 @@ router_getdestination.get('/api/get_destination', (req, res) => {
 
 
   /*edit destinations
-request: destinationId, placeName, cost, notes
-response: name, cost, notes*/
-router_editdestination.get('/api/edit_destination', (req, res) => {
-    const destinationId = req.query.destinationId; 
+request: destinationId, name, cost, notes
+response: destinationId, name, cost, notes*/
+router_editdestination.put('/api/edit_destination', (req, res) => {
+    const { destinationId, name, cost, notes } = req.body;
   
     if (!destinationId) {
-      res.status(400).json({ error: 'Missing itineraryId in the request' });
+      res.status(400).json({ error: 'Missing destinationId in the request' });
       return;
-    } else if (!placeName) {
-        res.status(500).json({ error: 'Missing destination name' });
-        return;
-    }
+    } 
+
   
     pool.query(
-      'SELECT b.name, b.cost, b.notes FROM ItineraryDestination a JOIN Destination b ON a.destination_id = b.id WHERE itinerary_id = ?',
-      [itineraryId],
+      'UPDATE destination SET cost = ?, name = ?, notes = ? WHERE id = ?'
+      [cost], [name],[notes], [destinationId]
+
       (err, result) => {
         if (err) {
           console.error('Error querying database', err);
