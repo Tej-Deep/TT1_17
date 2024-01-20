@@ -1,10 +1,18 @@
 .stack {
-    height: 90vh;
+    height: 100vh;
     margin: 4px;
+    background-color: lightyellow;
+    overflow: scroll;
 }
 
 .title {
-    text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    margin: 1%;
+}
+
+.createButton {
+    margin: 8px;
 }
 
 .overallWrapper {
