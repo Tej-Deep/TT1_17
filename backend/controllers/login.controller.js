@@ -1,26 +1,11 @@
-var mysql = require('mysql2');
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "", // TODO: password
-  database: "techtrek24"
-});
-
+const db = require('../db')
 var jwt = require("jsonwebtoken");
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
-// exports.login = 
-con.connect(function(err) {
-                    if (err) throw err;
-                    console.log("Connected!");
-                });
-
-
 exports.login = (req, res) => {
     console.log(req.body)
-    con.query('select * from user where username = ?', [req.body.username], function (err, result) {
+    db.query('select * from user where username = ?', [req.body.username], function (err, result) {
     if (err) throw err;
     console.log(result)
     if(!result.length){
