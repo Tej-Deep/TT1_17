@@ -93,6 +93,117 @@ const Home = () => {
                             </CardActions>
                         </Card>
                 </Grid>
+                <Grid className="cardWrapper" item xs={4}>
+                        <Card className="card">
+                            <CardMedia
+                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
+                                component="img"
+                                alt="green iguana"
+                                height="148"
+                                image={placeholderImage}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    Japan Spring 2025
+                                </Typography>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Budget:  
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        $2000
+                                    </Typography>
+                                </div>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Country:
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Japan
+                                    </Typography>
+                                </div>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">View</Button>
+                                <Button size="small">Delete</Button>
+                            </CardActions>
+                        </Card>
+                </Grid>
+                <Grid className="cardWrapper" item xs={4}>
+                        <Card className="card">
+                            <CardMedia
+                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
+                                component="img"
+                                alt="green iguana"
+                                height="148"
+                                image={placeholderImage}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    Japan Spring 2025
+                                </Typography>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Budget:  
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        $2000
+                                    </Typography>
+                                </div>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Country:
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Japan
+                                    </Typography>
+                                </div>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">View</Button>
+                                <Button size="small">Delete</Button>
+                            </CardActions>
+                        </Card>
+                </Grid>
+                <Grid className="cardWrapper" item xs={4}>
+                        <Card className="card">
+                            <CardMedia
+                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
+                                component="img"
+                                alt="green iguana"
+                                height="148"
+                                image={placeholderImage}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    Japan Spring 2025
+                                </Typography>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Budget:  
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        $2000
+                                    </Typography>
+                                </div>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Country:
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Japan
+                                    </Typography>
+                                </div>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">View</Button>
+                                <Button size="small">Delete</Button>
+                            </CardActions>
+                        </Card>
+                </Grid>
                 <Grid item xs={4} className="cardWrapper">
                 </Grid>
                 <Grid item xs={4} className="cardWrapper">

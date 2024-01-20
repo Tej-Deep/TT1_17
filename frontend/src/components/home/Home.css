@@ -12,14 +12,16 @@
 }
 
 .cardWrapper {
+    display: flex;
     background-color: lightyellow;
     height: 50%;
     margin: 2px;
+    justify-content: center;
 }
 
 .card {
     height: 96%;
-    width: 96%
+    width: 80%
 }
 
 .holder {
