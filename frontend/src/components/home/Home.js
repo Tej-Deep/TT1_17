@@ -73,7 +73,7 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button onClick={()=> {navigate("/itinerary")}} variant="contained" size="small">View</Button>
+                                <Button onClick={()=> {navigate("/itinerary", { state: { id: itinerary.id }})}} variant="contained" size="small">View</Button>
                                 <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
