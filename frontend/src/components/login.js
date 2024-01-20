@@ -18,13 +18,6 @@ const Login = (props) => {
       return;
     }
 
-    /* 
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError("Please enter a valid email");
-      return;
-    }
-    */
-
     if ("" === password) {
       setPasswordError("Please enter a password");
       return;
@@ -43,7 +36,44 @@ const Login = (props) => {
         logIn();
         }
     })
-  */ 
+
+    const checkAccountExists = (callback) => {
+      fetch("", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username})
+      })
+      .then(r => r.json())
+      .then(r => {
+        callback(r?.userExists)
+      })
+    }
+*/
+    const logIn = () => {
+      fetch("", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username, password})
+      })
+      .then(r => r.json())
+      .then(r => {
+        if ('Login Successful' === r.message) {
+          localStorage.setItem("user", JSON.stringify({username, token: r.token}))
+          props.setLoggedIn(true)
+          props.setUsername(username)
+          navigate("/")
+        } else if ('User Not Found.' === r.message) {
+          window.alert("There is no account with this username") // include sign up option?
+        } else {
+          window.alert("Invalid username or password. Please try again.")
+        }
+      })
+    }
+   
   };
 
   return (

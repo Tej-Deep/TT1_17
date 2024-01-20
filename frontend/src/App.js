@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// import Home from './components/Home';
 import Login from './components/Login';
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -18,5 +17,25 @@ function App() {
     </div>
   );
 }
+
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.token) {
+    setLoggedIn(false);
+    return;
+  } else {
+    fetch("", {
+      method: "POST",
+      headers: {
+        'jwt.token': user.token,
+      }
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        setLoggedIn('Login Successful' === r.message)
+        setUsername(user.username || "")
+      });
+  }
+}, []);
 
 export default App;
