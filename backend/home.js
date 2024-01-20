@@ -20,9 +20,19 @@ const pool = mysql.createPool({
 router.use(cors());
 router.use(bodyParser.json());
 
-async function checkExistAndInsert(table, columnName, ) {
-    const [rows, fields] = await pool.execute("SELECT * FROM country WHERE id = ?", [country_id]);
-    return rows.length > 0
+function checkExistAndInsert(table, column, check_value) {
+    try {
+        pool.execute(`SELECT * FROM ${table} WHERE ${column} = "${check_value}"`, (err, result) => {
+            if (!result) {
+                pool.execute(`INSERT INTO ${table} (${column}) VALUES (?)`, [check_value]);
+                console.log('Record inserted');                
+            } else {
+                console.log('Record already exists');
+            }
+        });
+    } catch (err) {
+        console.log('Checking Error:', err);
+    }
 }
 
 router.get('/api/home/:user_id', (req, res) => {
@@ -38,20 +48,25 @@ router.get('/api/home/:user_id', (req, res) => {
 });
 
 router.post('/api/home/:user_id', (req, res) => {
-    pool.query('INSERT INTO itinerary SET (user_id, ?)',
-    [req.params.user_id, req.body], (err, result) => {
-        if (err) {
-            console.error("Failed to add itinerary", err);
-            res.status(500).json({ error: 'Failed to add itinerary'});
-            return;
-        }
-        res.status(202).json({ message: "Add itinerary successfully"});
-    })
+    checkExistAndInsert('country', 'name', req.body.country_name);
+    pool.query('SELECT id FROM country WHERE name = ?', [req.body.country_name], (err, result) => {
+        const country_id = result[0].id;
+        pool.query('INSERT INTO itinerary (user_id, country_id, budget, title) VALUES (?, ?, ?, ?)',
+        [req.params.user_id, country_id, req.body.budget, req.body.title], (err, result) => {
+            if (err) {
+                console.error("Failed to add itinerary", err);
+                res.status(500).json({ error: 'Failed to add itinerary'});
+                return;
+            }
+            res.status(202).json({ message: "Add itinerary successfully"});
+        })
+    });
+    
 });
 
 router.delete('/api/home', (req, res) => {
-    pool.query('DELETE FROM itinerary WHERE user_id = ? and id = ?', 
-    [req.body], (err, result) => {
+    pool.query('DELETE FROM itinerary WHERE id = ?', 
+    [req.body.id], (err, result) => {
         if (err) {
             console.error("Failed to delete itinerary", err);
             res.status(500).json({ error: "Failed to delete itinerary"});
