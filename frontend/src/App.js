@@ -12,6 +12,7 @@ import {
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import Itinerary from './components/itinerary/Itinerary'
+import Form from './components/form/Form'
 
 function App() {
   return (
@@ -33,6 +34,11 @@ function App() {
             exact
             path="/itinerary"
             element={<Itinerary />}
+          />
+           <Route
+            exact
+            path="/create"
+            element={<Form />}
           />
           <Route
             path="*"

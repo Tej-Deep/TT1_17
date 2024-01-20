@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import './Home.css';
 import placeholderImage from './japan.jpg';
 import axios from 'axios';
+import sampleData from './SampleData.json';
 
 
 const Home = () => {
@@ -20,43 +21,63 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-              const response = await axios.get('https://localhost/8080');
-              setData(response.data);
-            } catch (error) {
-              console.error('Error fetching data:', error);
-            }
-    }}, []);
+        // const fetchData = async () => {
+        //     try {
+        //       const response = await axios.get('https://localhost/8080');
+        //       setData(response.data);
+        //       console.log("hello!");
+        //       console.log(data);
+        //     } catch (error) {
+        //       console.error('Error fetching data:', error);
+        //     }
+        // }  
+        setData(sampleData.data);
+    }, []);
+
 
     return (
         <Stack className="stack">
             <div className="title">
-                <Button className="createButton" variant="contained">Create New Itinerary</Button>
+                <Button className="createButton" variant="contained" onClick={()=> {navigate("/create")}}>Create New Itinerary</Button>
             </div>
             <Grid container className="overallWrapper" spacing={1}>
-                {/* {data.map(itinerary=> <Grid className="cardWrapper" item xs={4}>
+                {data.map(itinerary=> <Grid className="cardWrapper" item xs={4}>
                         <Card className="card">
-                            <CardMedia>
-                                <div style={{ backgroundColor, height: 148 }} />
-                            </CardMedia>
+                            <CardMedia
+                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
+                                component="img"
+                                alt="green iguana"
+                                height="148"
+                                image={placeholderImage}
+                            />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
+                                <Typography gutterBottom variant="h6" component="div">
                                     {itinerary.title}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Budget: $2000
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Country: Japan
-                                </Typography>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Budget:$
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {itinerary.budget}
+                                    </Typography>
+                                </div>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Country:
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {itinerary.country}
+                                    </Typography>
+                                </div>
+                                
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
-                                <Button size="small">Delete</Button>
+                                <Button onClick={()=> {navigate("/itinerary", { state: { id: itinerary.id }})}} variant="contained" size="small">View</Button>
+                                <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
-                </Grid>)} */}
+                </Grid>)}
                 <Grid className="cardWrapper" item xs={4}>
                         <Card className="card">
                             <CardMedia
@@ -93,123 +114,6 @@ const Home = () => {
                                 <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
-                </Grid>
-                <Grid className="cardWrapper" item xs={4}>
-                        <Card className="card">
-                            <CardMedia
-                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
-                                component="img"
-                                alt="green iguana"
-                                height="148"
-                                image={placeholderImage}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
-                                    Japan Spring 2025
-                                </Typography>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Budget:  
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        $2000
-                                    </Typography>
-                                </div>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Country:
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Japan
-                                    </Typography>
-                                </div>
-                                
-                            </CardContent>
-                            <CardActions>
-                                <Button variant="contained" size="small">View</Button>
-                                <Button variant="contained" size="small">Delete</Button>
-                            </CardActions>
-                        </Card>
-                </Grid>
-                <Grid className="cardWrapper" item xs={4}>
-                        <Card className="card">
-                            <CardMedia
-                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
-                                component="img"
-                                alt="green iguana"
-                                height="148"
-                                image={placeholderImage}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
-                                    Japan Spring 2025
-                                </Typography>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Budget:  
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        $2000
-                                    </Typography>
-                                </div>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Country:
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Japan
-                                    </Typography>
-                                </div>
-                                
-                            </CardContent>
-                            <CardActions>
-                                <Button variant="contained" size="small">View</Button>
-                                <Button variant="contained" size="small">Delete</Button>
-                            </CardActions>
-                        </Card>
-                </Grid>
-                <Grid className="cardWrapper" item xs={4}>
-                        <Card className="card">
-                            <CardMedia
-                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
-                                component="img"
-                                alt="green iguana"
-                                height="148"
-                                image={placeholderImage}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
-                                    Japan Spring 2025
-                                </Typography>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Budget:  
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        $2000
-                                    </Typography>
-                                </div>
-                                <div className="holder">
-                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                                        Country:
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Japan
-                                    </Typography>
-                                </div>
-                                
-                            </CardContent>
-                            <CardActions>
-                                <Button variant="contained" size="small">View</Button>
-                                <Button variant="contained" size="small">Delete</Button>
-                            </CardActions>
-                        </Card>
-                </Grid>
-                <Grid item xs={4} className="cardWrapper">
-                </Grid>
-                <Grid item xs={4} className="cardWrapper">
-                </Grid>
-                <Grid item xs={4} className="cardWrapper">
                 </Grid>
             </Grid>
         </Stack>

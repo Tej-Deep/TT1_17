@@ -22,9 +22,11 @@
 .cardWrapper {
     display: flex;
     background-color: lightyellow;
-    height: 54%;
-    margin: 2px;
+    height: 50%;
+    margin: 8px;
     justify-content: center;
+    padding-bottom: 4px;
+    
 }
 
 .card {
