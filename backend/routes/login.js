@@ -4,6 +4,7 @@ var router = express.Router();
 var logincontroller = require('../controllers/login.controller')
 
 router.post('/', logincontroller.login);
+router.post('/register', logincontroller.register);
 // router.get('/protected', logincontroller.verifytoken, (req, res) => {
 //   res.json({ message: 'Protected route accessed', user: req.user });
 // });

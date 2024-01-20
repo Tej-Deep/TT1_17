@@ -4,8 +4,10 @@ var jwt = require("jsonwebtoken");
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
-const checkPassword = async (inputPassword, hashedPassword) => {
-    return bcrypt.compare(inputPassword, hashedPassword);
+// Function to hash a password using bcrypt
+const hashPassword = async (password) => {
+    const saltRounds = 10;
+    return bcrypt.hash(password, saltRounds);
   };
 
 exports.login = (req, res) => {
@@ -24,6 +26,48 @@ exports.login = (req, res) => {
     res.status(200).send({accessToken: token, message: "Login Successful"})
 });
 }
+
+exports.register = (req, res, next) => {
+    const first_name = req.body.first_name
+    const last_name = req.body.last_name
+    const password = req.body.password
+    const username = req.body.username
+
+    try {
+        // Check if the username already exists
+        const checkUsernameQuery = 'SELECT * FROM user WHERE username = ?';
+        const checkUsernameValues = [username];
+    
+        db.query(checkUsernameQuery, checkUsernameValues, async (checkError, checkResults) => {
+          if (checkError) {
+            console.error('Error checking username:', checkError);
+            return res.status(500).json({ error: 'Error checking username' });
+          }
+    
+          if (checkResults.length > 0) {
+            return res.status(400).json({ error: 'Username already exists' });
+          }
+    
+          const hashedPassword = await hashPassword(password);
+    
+          const insertQuery = 'INSERT INTO user (first_name, last_name, username, password) VALUES (?,?,?,?)';
+          const insertValues = [first_name, last_name, username, hashedPassword];
+    
+          db.query(insertQuery, insertValues, (insertError, insertResults) => {
+            if (insertError) {
+              console.error('Error creating new user:', insertError);
+              res.status(500).json({ error: 'Error creating new user' });
+            } else {
+              console.log('New user created:', insertResults);
+              res.status(201).json({ message: 'User created successfully' });
+            }
+          });
+        });
+      } catch (error) {
+        console.error('Error hashing password:', error);
+        res.status(500).json({ error: 'Error creating new user' });
+      }
+};
 
 exports.verifytoken = (req, res, next) =>{
     const token = req.headers.auth;
