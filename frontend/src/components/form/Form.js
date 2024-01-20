@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import './Itenary.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from 'rsuite';
 import axios from 'axios';
+import './Form.css';
 
-const Itenary = () => {
+const Form = () => {
     const [formData, setFormData] = useState({
         title: "",
         budget: "", // Set initial budget as a float
@@ -13,6 +13,12 @@ const Itenary = () => {
           { place: "", cost: "", notes: "" }, // Set initial cost as a float
         ],
       });
+      const allDestinationsEmpty = formData.destinations.every(
+        (destination) =>
+          destination.place.trim() === "" &&
+          destination.cost.trim() === "" &&
+          destination.notes.trim() === ""
+      );
     
       const handleChange = (event) => {
         const { name, value } = event.target;
@@ -54,6 +60,11 @@ const Itenary = () => {
     
       const handleSubmit = (event) => {
         event.preventDefault();
+        if (allDestinationsEmpty) {
+          // If all destination fields are empty, prevent submission
+          alert("Please fill in at least one destination before submitting.");
+          return;
+        }
         console.log(formData);
         /*axios.post("https://localhost:4000/register", formData)
         .then((response) => {
@@ -64,6 +75,7 @@ const Itenary = () => {
       };
       return (
         <div className='container'>
+          <h1>Create Itenary</h1>
             <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="title">Title:</label>
@@ -80,7 +92,7 @@ const Itenary = () => {
           <div>
             <label htmlFor="destinations">Destinations:</label>
             {formData.destinations.map((destination, index) => (
-              <div key={index}>
+              <div className="container-with-border" key={index}>
                 <label>Place:</label>
                 <input
                   type="text"
@@ -112,6 +124,7 @@ const Itenary = () => {
                 </button>
               </div>
             ))}
+            <></>
             <button type="button" onClick={handleAddDestination}>
               Add Destination
             </button>
@@ -122,4 +135,4 @@ const Itenary = () => {
       );
 };
 
-export default Itenary;
+export default Form;
