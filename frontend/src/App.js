@@ -11,7 +11,7 @@ import {
 
 import Home from './components/home/Home';
 import Login from './components/login/Login';
-import Itinerary from './components/itenary/Itinerary'
+import Itinerary from './components/itinerary/Itinerary'
 
 function App() {
   return (
