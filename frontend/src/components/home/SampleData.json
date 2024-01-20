@@ -1,0 +1,11 @@
+{
+    "data": [
+      {"id": 1, "title": "2024 Summer Hols", "budget": 3000, "country": "Japan"},
+      {"id": 2, "title": "2024 Winter Hols", "budget": 2000, "country": "Korea"},
+      {"id": 3, "title": "2025 Summer Hols", "budget": 2500, "country": "China"},
+      {"id": 4, "title": "2025 Winter Hols", "budget": 2000, "country": "Korea"},
+      {"id": 5, "title": "2026 Summer Hols", "budget": 3000, "country": "Australia"},
+      {"id": 6, "title": "2026 Winter Hols", "budget": 2000, "country": "Malaysia"},
+      {"id": 7, "title": "2027 Break", "budget": 3000, "country": "Japan"}
+    ]
+  }
