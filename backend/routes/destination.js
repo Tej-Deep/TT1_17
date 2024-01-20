@@ -58,7 +58,7 @@ router.put('/api/destination', (req, res) => {
 
   
     pool.query(
-      'UPDATE destination SET cost = ?, name = ?, notes = ? datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") WHERE id = ?'
+      'UPDATE destination SET cost = ?, name = ?, notes = ?, datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") WHERE id = ?'
       [cost], [name],[notes], [destinationId], [datetime],
       (err, result) => {
         if (err) {
@@ -79,8 +79,8 @@ router.put('/api/destination', (req, res) => {
   /* Delete Destination */
   router.delete('/api/destination', (req, res) => {
     const destinationId = req.body.destinationId; 
-    pool.query('DELETE FROM destination WHERE id = ?', 
-    [destinationId], (err, result) => {
+    pool.query('DELETE FROM destination WHERE id = ?; DELETE FROM itinerary_destination WHERE destination_id = ?', 
+    [destinationId], [destinationId], (err, result) => {
         if (err) {
             console.error("Failed to delete destination", err);
             res.status(500).json({ error: "Failed to delete destination"});
@@ -93,13 +93,25 @@ router.put('/api/destination', (req, res) => {
   /* Create Destination 
   request: itineraryId, name, cost, notes*/
   router.put('/api/destination', (req, res) => {
-    const { itineraryId, name, cost, notes } = req.body;
+    const { itineraryId, name, cost, notes, datetime } = req.body;
     if (!itineraryId) {
         res.status(400).json({ error: 'Missing itineraryId in the request' });
         return;
       }
     
-  
+      pool.query(
+        'INSERT INTO destination (country_id, cost, name, notes) SELECT country_id, ?, ?, ?, datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") FROM itinerary WHERE id = ?'
+        [cost], [name],[notes], [datetime], [itineraryId],
+        (err, result) => {
+          if (err) {
+            console.error('Error creating destination', err);
+            res.status(500).json({ error: 'Failed to create new destination' });
+            return;
+          }
+          res.status(200).json({ message: "destination created successfully"});
+
+        }
+      );
 
   });
 
