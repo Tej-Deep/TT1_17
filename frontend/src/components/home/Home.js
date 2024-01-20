@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import './Home.css';
 import placeholderImage from './japan.jpg';
 import axios from 'axios';
+import Form from '../form/Form';
 
 
 const Home = () => {
@@ -29,10 +30,11 @@ const Home = () => {
             }
     }}, []);
 
+
     return (
         <Stack className="stack">
             <div className="title">
-                <Button className="createButton" variant="contained">Create New Itinerary</Button>
+                <Button className="createButton" variant="contained" onClick={()=> {navigate("/create")}}>Create New Itinerary</Button>
             </div>
             <Grid container className="overallWrapper" spacing={1}>
                 {/* {data.map(itinerary=> <Grid className="cardWrapper" item xs={4}>
