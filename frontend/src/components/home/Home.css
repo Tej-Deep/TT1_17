@@ -1,0 +1,23 @@
+.stack {
+    height: 90vh;
+    margin: 4px;
+}
+
+.title {
+    text-align: center;
+}
+
+.overallWrapper {
+    height:80vh;
+}
+
+.cardWrapper {
+    background-color: lightyellow;
+    height: 50%;
+    margin: 2px;
+}
+
+.card {
+    height: 96%;
+    width: 96%
+}
