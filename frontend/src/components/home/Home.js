@@ -89,7 +89,7 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button onClick={()=> {navigate("/itenary")}} variant="contained" size="small">View</Button>
+                                <Button onClick={()=> {navigate("/itinerary")}} variant="contained" size="small">View</Button>
                                 <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>

@@ -76,7 +76,7 @@ const Itinerary = () => {
     });
 
     const [open, setOpen] = useState(false);
-    const [openCreate, setOpenCreate] = useState('false');
+    const [openCreate, setOpenCreate] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [selectedItem, setSelectedItem] = useState({
