@@ -59,7 +59,7 @@ router.put('/api/destination', (req, res) => {
   
     pool.query(
       'UPDATE destination SET cost = ?, name = ?, notes = ?, datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") WHERE id = ?'
-      [cost], [name],[notes], [destinationId], [datetime],
+      [cost, name, notes,destinationId, datetime],
       (err, result) => {
         if (err) {
           console.error('Error updating database', err);
@@ -80,7 +80,7 @@ router.put('/api/destination', (req, res) => {
   router.delete('/api/destination', (req, res) => {
     const destinationId = req.body.destinationId; 
     pool.query('DELETE FROM destination WHERE id = ?; DELETE FROM itinerary_destination WHERE destination_id = ?', 
-    [destinationId], [destinationId], (err, result) => {
+    [destinationId, destinationId], (err, result) => {
         if (err) {
             console.error("Failed to delete destination", err);
             res.status(500).json({ error: "Failed to delete destination"});
@@ -100,8 +100,9 @@ router.put('/api/destination', (req, res) => {
       }
     
       pool.query(
-        'INSERT INTO destination (country_id, cost, name, notes) SELECT country_id, ?, ?, ?, datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") FROM itinerary WHERE id = ?'
-        [cost], [name],[notes], [datetime], [itineraryId],
+        'INSERT INTO destination (country_id, cost, name, notes) SELECT country_id, ?, ?, ?, datetime = STR_TO_DATE(?, "%m/%d/%y %H:%i") FROM itinerary WHERE id = ?;' +
+        'INSERT INTO itinerary_destination (destination_id, itinerary_id) SELECT MAX(id), ? FROM destination'
+        [cost, name, notes, datetime, itineraryId, itineraryId],
         (err, result) => {
           if (err) {
             console.error('Error creating destination', err);
