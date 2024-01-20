@@ -1,6 +1,6 @@
 var express = require('express');
 const mysql = require("mysql2");
-const { append } = require('express/lib/response');
+
 const bodyParser = require("body-parser")
 const app = express();
 const router = express.Router();
@@ -28,7 +28,7 @@ router.get('/api/destination', (req, res) => {
     }
   
     pool.query(
-      'SELECT b.id, b.name, b.cost, b.notes, DATE_FORMAT(datetime, "%m/%d/%y %H:%i" datetime)  FROM itinerary_destination a JOIN destination b ON a.destination_id = b.id WHERE itinerary_id = ?',
+      'SELECT b.id destinationId, b.name, b.cost, b.notes, DATE_FORMAT(datetime, "%m/%d/%y %H:%i") datetime  FROM itinerary_destination a JOIN destination b ON a.destination_id = b.id WHERE itinerary_id = ?',
       [itineraryId],
       (err, result) => {
         if (err) {
@@ -97,6 +97,8 @@ router.put('/api/destination', (req, res) => {
     if (!itineraryId) {
         res.status(400).json({ error: 'Missing itineraryId in the request' });
         return;
+      } else if (!name || !cost) {
+        res.status(400).json({ error: 'Place name and cost cannot be empty' })
       }
     
       pool.query(
