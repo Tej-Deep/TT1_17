@@ -11,7 +11,7 @@ import {
 
 import Home from './components/home/Home';
 import Login from './components/login/Login';
-import Itenary from './components/itenary/Itenary'
+import Itinerary from './components/itenary/Itinerary'
 
 function App() {
   return (
@@ -31,8 +31,8 @@ function App() {
           />
           <Route
             exact
-            path="/itenary"
-            element={<Itenary />}
+            path="/itinerary"
+            element={<Itinerary />}
           />
           <Route
             path="*"
