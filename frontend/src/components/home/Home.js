@@ -32,7 +32,7 @@ const Home = () => {
     return (
         <Stack className="stack">
             <div className="title">
-                <h1>Welcome!</h1>
+                <Button className="createButton" variant="contained">Create New Itinerary</Button>
             </div>
             <Grid container className="overallWrapper" spacing={1}>
                 {/* {data.map(itinerary=> <Grid className="cardWrapper" item xs={4}>
