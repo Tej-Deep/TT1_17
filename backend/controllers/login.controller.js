@@ -1,7 +1,12 @@
 const db = require('../db')
+const bcrypt = require('bcrypt');
 var jwt = require("jsonwebtoken");
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY
+
+const checkPassword = async (inputPassword, hashedPassword) => {
+    return bcrypt.compare(inputPassword, hashedPassword);
+  };
 
 exports.login = (req, res) => {
     console.log(req.body)
@@ -9,14 +14,14 @@ exports.login = (req, res) => {
     if (err) throw err;
     console.log(result)
     if(!result.length){
-        return res.status(404).send({message: "User Not Found."})
+        return res.status(404).send({accessToken:null, message: "User Not Found."})
     }
-    if(result[0].password != req.body.password){
+    if(!bcrypt.compareSync(req.body.password, result[0].password)){
         return res.status(401).send({accessToken:null, message: "Invalid Password."})
     }
     const token = jwt.sign({user_id: result[0].id , username: result[0].username}, SECRET_KEY, {expiresIn: '1h'})
     console.log(token)
-    res.status(200).send({jwttoken: token, message: "Login Successful"})
+    res.status(200).send({accessToken: token, message: "Login Successful"})
 });
 }
 
