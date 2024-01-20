@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -10,11 +10,23 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import './Home.css';
-
+import placeholderImage from './japan.jpg'
+import axios from 'axios';
 
 
 const Home = () => {
     const backgroundColor = '#2196F3';
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              const response = await axios.get('https://localhost/8080');
+              setData(response.data);
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+    }}, []);
 
     return (
         <Stack className="stack">
@@ -22,14 +34,14 @@ const Home = () => {
                 <h1>Welcome!</h1>
             </div>
             <Grid container className="overallWrapper" spacing={1}>
-                <Grid className="cardWrapper" item xs={4}>
+                {/* {data.map(itinerary=> <Grid className="cardWrapper" item xs={4}>
                         <Card className="card">
                             <CardMedia>
                                 <div style={{ backgroundColor, height: 148 }} />
                             </CardMedia>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
-                                    Japan Spring 2025
+                                    {itinerary.title}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     Budget: $2000
@@ -40,7 +52,43 @@ const Home = () => {
                             </CardContent>
                             <CardActions>
                                 <Button size="small">View</Button>
-                                <Button size="small">Edit</Button>
+                                <Button size="small">Delete</Button>
+                            </CardActions>
+                        </Card>
+                </Grid>)} */}
+                <Grid className="cardWrapper" item xs={4}>
+                        <Card className="card">
+                            <CardMedia
+                                // {/* <div style={{ backgroundColor, height: 148 }} /> */}
+                                component="img"
+                                alt="green iguana"
+                                height="148"
+                                image={placeholderImage}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    Japan Spring 2025
+                                </Typography>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Budget:  
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        $2000
+                                    </Typography>
+                                </div>
+                                <div className="holder">
+                                    <Typography variant="body2" color="text.secondary" fontWeight="bold">
+                                        Country:
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Japan
+                                    </Typography>
+                                </div>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">View</Button>
                                 <Button size="small">Delete</Button>
                             </CardActions>
                         </Card>
