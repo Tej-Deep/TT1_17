@@ -13,7 +13,7 @@ const Login = (props) => {
     setUsernameError("");
     setPasswordError("");
 
-    if ("" === email) {
+    if ("" === username) {
       setUsernameError("Please enter your username");
       return;
     }
@@ -34,8 +34,16 @@ const Login = (props) => {
       setPasswordError("The password must be 8 characters or longer");
       return;
     }
-
-    // Authentication calls will be made here...
+/*
+    checkAccountExists(accountExists => {
+      if (accountExists) {
+        logIn();
+      }
+      else if (window.confirm("There is no account with this username. Do you wish to create a new account?")) {
+        logIn();
+        }
+    })
+  */ 
   };
 
   return (
@@ -47,7 +55,7 @@ const Login = (props) => {
       <div className={"inputContainer"}>
         <input
           value={username}
-          placeholder="Enter your username here"
+          placeholder="Username"
           onChange={(ev) => setUsername(ev.target.value)}
           className={"inputBox"}
         />
@@ -57,7 +65,8 @@ const Login = (props) => {
       <div className={"inputContainer"}>
         <input
           value={password}
-          placeholder="Enter your password here"
+          type="password"
+          placeholder="Password"
           onChange={(ev) => setPassword(ev.target.value)}
           className={"inputBox"}
         />

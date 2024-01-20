@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// import Home from './components/Home';
 import Login from './components/Login';
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -11,8 +12,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home username={username} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
-          <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setUsername={setUsername} />} />
+          <Route path="/" element={<Login setLoggedIn={setLoggedIn} setUsername={setUsername} />} />
         </Routes>
       </BrowserRouter>
     </div>
