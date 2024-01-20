@@ -1,10 +1,9 @@
 var express = require('express');
 const mysql = require("mysql2");
-
 const bodyParser = require("body-parser")
 const app = express();
 const router = express.Router();
-
+console.log(process.env.DB_HOST)
 const pool = mysql.createPool({
     connectionLimit:10,
     host: process.env.DB_HOST,
