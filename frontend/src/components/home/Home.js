@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -10,13 +10,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import './Home.css';
-import placeholderImage from './japan.jpg'
+import placeholderImage from './japan.jpg';
 import axios from 'axios';
 
 
 const Home = () => {
     const backgroundColor = '#2196F3';
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -88,8 +89,8 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
-                                <Button size="small">Delete</Button>
+                                <Button onClick={()=> {navigate("/itenary")}} variant="contained" size="small">View</Button>
+                                <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
                 </Grid>
@@ -125,8 +126,8 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
-                                <Button size="small">Delete</Button>
+                                <Button variant="contained" size="small">View</Button>
+                                <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
                 </Grid>
@@ -162,8 +163,8 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
-                                <Button size="small">Delete</Button>
+                                <Button variant="contained" size="small">View</Button>
+                                <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
                 </Grid>
@@ -199,8 +200,8 @@ const Home = () => {
                                 
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
-                                <Button size="small">Delete</Button>
+                                <Button variant="contained" size="small">View</Button>
+                                <Button variant="contained" size="small">Delete</Button>
                             </CardActions>
                         </Card>
                 </Grid>
