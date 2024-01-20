@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import './Itinerary.css'
 
@@ -7,30 +7,10 @@ import {
     Navbar, Form, Button, List, FlexboxGrid, Modal,
     Input, InputGroup, InputNumber, Schema
 } from 'rsuite';
+import sampleData from '../assets/itinerary.json'
 
 const Textarea = React.forwardRef((props, ref) => <Input {...props} as="textarea" ref={ref} />);
 const Rule = Schema.Types.StringType().isRequired('This field is required.');
-
-const data = [
-    {
-        name: 'Hong Kong Free Walk @ Tsim Sha Tsui',
-        datetime: '2017.10.13 14:50',
-        cost: 3223,
-        notes: 'Hong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha TsuiHong Kong Free Walk @ Tsim Sha Tsui',
-    },
-    {
-        name: 'Hong Kong Free Walk @ Tsim Sha Tsui',
-        datetime: '2017.10.13 14:50',
-        cost: 3223,
-        notes: 433,
-    },
-    {
-        name: 'Hong Kong Free Walk @ Tsim Sha Tsui',
-        datetime: '2017.10.13 14:50',
-        cost: 3223,
-        notes: 433,
-    },
-];
 
 const styleCenter = {
     display: 'flex',
@@ -70,12 +50,19 @@ const Itinerary = () => {
     const navigate = useNavigate();
 
     const [itinerary, setItinerary] = useState({
-        name: 'hiiiii',
-        country: 'N.A.',
-        budget: 0,
+        name: 'Japan Spring 2025',
+        country: 'Japan',
+        budget: 2000,
     });
 
     const [open, setOpen] = useState(false);
+    const [temp, setTemp] = useState();
+    const [data, setData] = useState([{
+        name: 'N.A.',
+        datetime: '2017.10.13 14:50',
+        cost: 0,
+        notes: 0,
+    }]);
     const [openCreate, setOpenCreate] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
@@ -86,16 +73,15 @@ const Itinerary = () => {
         notes: 0,
     },);
 
+    useEffect(() => {
+        console.log(sampleData);
+        setData(sampleData.data);
+    }, []);
+  
+
     const handleView = (item) => {
         setOpenModal(true);
         setSelectedItem(item);
-        let response = fetch('/api/destination',
-      {
-        ItineraryID:1,
-      }
-      
-    );
-    console.log(response)
     };
 
     return (
@@ -230,6 +216,7 @@ const Itinerary = () => {
                     <Button appearance="primary" onClick={() => { setOpenEdit(false) }}>
                         Save Changes
                     </Button>
+                    
                 </Modal.Footer>
             </Modal>
             <Modal open={openCreate} onClose={() => { setOpenCreate(false) }} >
@@ -237,7 +224,7 @@ const Itinerary = () => {
                     <Modal.Title>Create New Destination</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form fluid >
+                    <Form fluid onChange={value => { setTemp(value)}}>
                         <Form.Group controlId="name">
                             <Form.ControlLabel>Name:</Form.ControlLabel>
                             <Form.Control name="name" />
@@ -252,16 +239,15 @@ const Itinerary = () => {
                             <Form.ControlLabel>Notes</Form.ControlLabel>
                             <Form.Control rows={5} name="notes" accepter={Textarea} />
                         </Form.Group>
+                        <Button appearance="primary" onClick={() => { setOpenCreate(false); 
+                        const newArray = [...data, temp];
+                        setData(newArray);
+                        }}>
+                        Create New
+                    </Button>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button appearance="default" onClick={() => { setOpenCreate(false) }}>
-                        Delete
-                    </Button>
-                    <Button appearance="primary" onClick={() => { setOpenCreate(false) }}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+                
             </Modal>
             <Modal open={open} onClose={() => { setOpen(false) }} backdrop="static">
                 <Modal.Header>
